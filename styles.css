@@ -1,0 +1,139 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+.title {
+    color: #5C6AC4;
+}
+
+nav{
+    background-color: #354e80;
+    height: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+}
+
+.menu{
+    display: flex;
+    justify-content: right;
+    list-style: none;
+    width: 75%;
+}
+
+.menu li{
+    margin-left: 20px;
+}
+
+.menu li a{
+    font-size: 20px;
+    font-family: monospace;
+}
+
+.search{
+    display: flex;
+    align-items: center;
+}
+
+
+.search input{
+    outline: none;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 10px;
+    margin-right: 15px;
+}
+
+.search button{
+    font-size: 18px;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: #354e80;
+
+}
+
+nav{
+    margin: auto;
+    text-align: center;
+}
+nav ul li {
+    display: inline-block;
+    font-weight: bold;
+}
+nav ul li a:hover{
+    transition: .3s;
+    color: #354e80;
+    background: black;
+}
+.shadow{
+    position: absolute;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 40px rgba(0,0,0,0.1) inset;
+}
+.shadow:before,
+.shadow:after{
+    content:'';
+    position: absolute;
+    z-index: -1;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    top:50%;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    border-radius:100px/ 10px;
+}
+
+
+.search button:hover{
+    border: 1px solid #ddd;
+    background-color: #cedaf2;
+}
+main{
+    display: grid;
+    grid-template-rows: 90px 580px 70px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.content {
+    grid-row: 2/span 1;
+    grid-column: 1/span 3;
+    background-color: #cedaf2;
+    padding-left: 10px;
+}
+.sidebar{
+    grid-row: 2/span 1;
+    grid-column-start: 4;
+    background-color: #354e80;
+    padding-left: 10px;
+    font-family: Verdana;
+    color: #eef4ff;
+
+}
+
+footer{
+    display:flex;
+    align-items: center;
+    grid-row: 3/span 1;
+    grid-column: 1/span 4;
+    background-color: #354e80;
+    color: #eef4ff;
+}
+
+h2{
+    font-family: Verdana;
+}
+
+li a{
+    color: #eef4ff;
+    text-decoration:none;
+    font-size: 20px;
+}
+
+li a:hover{
+    color: #cedaf2;
+}
