@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission 2 - Kdou Database Analysis</title>
+  <link rel="stylesheet" href="csss.css">
+</head>
+<body>
+<main>
+  <nav class="shadow">
+    <ul>
+      <li><a href="Accueil.html">Accueil</a></li>
+      <li><a href="#">Travaux</a></li>
+      <li><a href="#">A Propos</a></li>
+    </ul>
+  </nav>
+  <h1>Mission 2 - Analyse de la Base de Données Kdou</h1>
+  <section class="contexte">
+    <div class="flex-container">
+      <img src="assets/images/transition.jpg" alt="Transition image" class="transition-image">
+      <div class="text-contenu">
+        <h2>Contexte</h2>
+        <p>La décision a été prise de faire la transition d'Excel vers Access afin de faciliter la manipulation de la base de données. Cependant, qui dit nouvel outil dit nouvelles méthodes de manipulation. Désormais, pour gérer la base de données de Kdou, des requêtes QBE (Query By Example) ou SQL doivent être réalisées.</p>
+        <div class="mission-objectif">
+          <p>Le but de la mission 2 est de fournir à l'entreprise Kdou des informations précises sur les ventes et les comportements géographiques de la clientèle. Pour cela, nous devons analyser la base de données d'Access en réalisant des requêtes ciblées afin de déterminer, par exemple, les produits populaires selon les régions ou les clients sans commandes. Ces informations permettront de mieux orienter les stratégies de vente et d'améliorer la présence de Kdou sur ses marchés clés.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="indicateurs-grid">
+    <div class="indicateur-card">
+      <h3>1. Répartition géographique des clients</h3>
+      <div class="indicateur-content">
+        <div class="text-contenu">
+          <p>
+            Pour une entreprise comme Kdou qui se concentre sur le marché français, le géotargeting représente une opportunité clé d'optimisation. En analysant précisément la répartition géographique des clients sur le territoire, l'entreprise peut non seulement identifier les zones les plus prometteuses, mais aussi affiner sa stratégie de distribution région par région.</p>
+        </div>
+        <div class="query-section">
+          <h4>Question associée</h4>
+          <div class="query-box question">
+            Dans quelles villes la clientèle est-elle la plus importante ? Citer les 3 premières
+          </div>
+          <h4>Requête SQL</h4>
+          <div class="query-box sql">
+            <span class="sql">SELECT</span> Client.VilleCli, <span class="sql-fonction">Count</span>(Client.CodeCli) <span class="sql">AS</span> CompteDeCodeCli
+            <span class="sql">FROM</span> Client
+            <span class="sql">GROUP BY</span> Client.VilleCli
+            <span class="sql">ORDER BY</span> <span class="sql-fonction">Count</span>(Client.CodeCli) DESC;
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="indicateur-card">
+      <h3>2. Analyse des prix et marges</h3>
+      <div class="indicateur-content">
+        <div class="text-contenu">
+          <p>Pour Kdou, qui vend des produits d'épicerie fine, le choix des prix est essentiel. En étudiant les prix moyens du marché et les montants minimum et maximum que les clients sont prêts à payer, l'entreprise peut fixer des tarifs qui attirent les clients tout en restant rentable.</p>
+        </div>
+        <div class="query-section">
+          <h4>Question associée</h4>
+          <div class="query-box question">
+            Donner le prix moyen de vente des produits, le prix minimum et le prix maximum.
+          </div>
+          <h4>Requête SQL</h4>
+          <div class="query-box sql">
+            <span class="sql">SELECT</span> <span class="sql-fonction">Avg</span>([PrixUnit]) <span class="sql">AS</span> Moyenne,
+            <span class="sql-fonction">Min</span>([PrixUnit]) <span class="sql">AS</span> Minimum,
+            <span class="sql-fonction">Max</span>([PrixUnit]) <span class="sql">AS</span> Maximum
+            <span class="sql">FROM</span> Produit;
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="indicateur-card">
+      <h3>3. Distribution des produits par fournisseur</h3>
+      <div class="indicateur-content">
+        <div class="text-contenu">
+          <p>La connaissance précise du nombre de produits en bouteille par fournisseur est stratégique pour KDou. Ce format, typique de l'épicerie fine (huiles, vinaigres, vins, spiritueux), représente une part importante du catalogue. Cette analyse permet d'identifier les fournisseurs clés dans ce segment et d'optimiser les approvisionnements pour maintenir une offre diversifiée.</p>
+        </div>
+        <div class="query-section">
+          <h4>Question associée</h4>
+          <div class="query-box question">
+            Donner pour chaque fournisseur le nombre de produits qu'il propose en bouteille.
+          </div>
+          <h4>Requête SQL</h4>
+          <div class="query-box sql">
+            <span class="sql">SELECT</span> Produit.QteParUnite, Produit.NomProd, Fournisseur.Societe
+            <span class="sql">FROM</span> Fournisseur
+            <span class="sql">INNER JOIN</span> Produit <span class="sql">ON</span> Fournisseur.NoFour = Produit.NoFour
+            <span class="sql">WHERE</span> Produit.QteParUnite <span class="sql">Like</span> <span class="sql-string">"*bouteille*"</span>;
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="indicateur-card">
+      <h3>4. Taux d'engagement client</h3>
+      <div class="indicateur-contenu">
+        <div class="text-contenu">
+          <p>Pour Kdou, repérer les clients qui n'achètent plus est une priorité. En identifiant ces clients inactifs, l'entreprise peut mieux cibler ses offres commerciales pour les faire revenir. C'est d'autant plus important pour une épicerie fine haut de gamme où chaque client compte. Cette approche aide Kdou à maintenir et développer ses ventes tout en gardant une relation privilégiée avec sa clientèle.</p>
+        </div>
+        <div class="query-section">
+          <h4>Question associée</h4>
+          <div class="query-box question">
+            Est-ce qu'il y a dans la clientèle des clients qui n'ont pas encore passé de commande ?
+          </div>
+          <h4>Requête SQL</h4>
+          <div class="query-box sql">
+            <span class="sql">SELECT</span> Client.SocieteCli, Client.ContactCli, Client.CodeCli
+            <span class="sql">FROM</span> Client
+            <span class="sql">LEFT JOIN</span> Commande <span class="sql">ON</span> Client.CodeCli = Commande.CodeCli
+            <span class="sql">GROUP BY</span> Client.SocieteCli, Client.ContactCli, Client.CodeCli, Commande.CodeCli
+            <span class="sql">HAVING</span> Commande.CodeCli <span class="sql">Is Null</span>;
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+</main>
+</body>
+</html>

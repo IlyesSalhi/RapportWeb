@@ -5,7 +5,6 @@ body{
 .title {
     color: #5C6AC4;
 }
-
 nav{
     background-color: #354e80;
     height: 80px;
@@ -15,46 +14,32 @@ nav{
     align-items: center;
     position: fixed;
 }
-
 .menu{
     display: flex;
-    justify-content: right;
+    justify-content: flex-start;
     list-style: none;
     width: 75%;
 }
-
-.menu li{
-    margin-left: 20px;
+nav ul li {
+    list-style: none;
+    margin-left: 0;
 }
 
-.menu li a{
+nav ul li a {
+    color: #eef4ff;
+    text-decoration: none;
     font-size: 20px;
     font-family: monospace;
+    padding: 10px 15px;
 }
 
+nav ul li a:hover {
+    color: #cedaf2;
+    transition: .3s;
+}
 .search{
     display: flex;
     align-items: center;
-}
-
-
-.search input{
-    outline: none;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    padding: 10px;
-    margin-right: 15px;
-}
-
-.search button{
-    font-size: 18px;
-    padding: 10px;
-    margin-right: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    color: #354e80;
-
 }
 
 nav{
@@ -86,8 +71,6 @@ nav ul li a:hover{
     right: 10px;
     border-radius:100px/ 10px;
 }
-
-
 .search button:hover{
     border: 1px solid #ddd;
     background-color: #cedaf2;
@@ -98,7 +81,6 @@ main{
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 10px;
 }
-
 .content {
     grid-row: 2/span 1;
     grid-column: 1/span 3;
@@ -112,9 +94,7 @@ main{
     padding-left: 10px;
     font-family: Verdana;
     color: #eef4ff;
-
 }
-
 footer{
     display:flex;
     align-items: center;
@@ -123,17 +103,14 @@ footer{
     background-color: #354e80;
     color: #eef4ff;
 }
-
 h2{
     font-family: Verdana;
 }
-
 li a{
     color: #eef4ff;
     text-decoration:none;
     font-size: 20px;
 }
-
 li a:hover{
     color: #cedaf2;
 }

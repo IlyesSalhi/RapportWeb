@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mission</title>
+    <link rel="stylesheet" href="mission1.css" >
+</head>
+<body>
+    <main>
+        <h1>Mission 1</h1>
+        <article>
+            <section class="sec1">
+
+                <h2>Contexte:</h2>
+
+                <section class="sous-sec1">
+                    <img src="assets/images/kdou.png" alt="kdou">
+                    <p>KDou est une entreprise commerciale qui propose à ses clients des produits alimentaires d’épicerie fine ou typiques achetés à des fournisseurs situés dans le monde entier. Tous les clients de l’entreprise se situent actuellement en France. L'entreprise considère générer un assez bon chiffre d'affaires et se pose des questions sur sa rentabilité, elle réfléchit à mieux se positionner par rapport à ses concurrents. </p>
+                </section>
+
+                <p>Le but de la mission 1 est d’aider l’entreprise Kdou à avoir une image plus “éco-friendly” tout en augmentant son bénéfice en vendant des produits plus respectueux de l’environnement. Pour cela nous avons dû étudier et exploiter les données de Kdou via un classeur Excel, avec chaque feuille par table de relation.</p>
+
+            </section>
+            <section class="sec2">
+                <h2>Bilan structuré sur l’étude des données:</h2>
+                <p>Sur Excel, nous avons pu constater 6 tables: </p>
+                <ul>
+                    <li>Fournisseur</li>
+                    <li>Produit</li>
+                    <li>Catégorie</li>
+                    <li>Clientele</li>
+                    <li>Commande</li>
+                    <li>DetailCommande</li>
+                </ul>
+
+                <p>Pour pouvoir mieux comprendre l'organisation des données de Kdou, plus précisément les liens et relations entre les tables, nous avons identifié toutes les clés primaires, ainsi que les clés étrangères.</p>
+
+                <h4>Pour les clés primaires:</h4>
+                <p>La clé primaire pour la table Fournisseur serait N° fournisseur, celle de la table produit serait Réf produit, celle de la table Catégorie serait Code catégorie, celle de la table Clientèle serait Code client, celle de la table Commande serait N° Commande et enfin celle la table Détail Commande serait une clé composée de N° Commande et Réf Produit.</p>
+
+                <h4>Pour les clés étrangères:</h4>
+                <p>La table Produit contient la clé étrangère N° fournisseur qui vient de la table Fournisseur, elle contient aussi la clé étrangère Code Catégorie qui vient de la table Catégorie. La table Commande contient la clé étrangère Code Client qui vient de la table Clientèle. La table Détail Commande contient la clé étrangère Réf produit qui appartient à la table Produit et la clé étrangère N° Commande qui vient de la table Commande.</p>
+                <p>Nous avons représenté, ci-dessous, chaque table avec leur clé primaire en bleu et leurs clés étrangères en bleu clair:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="10" class="fournisseur">Fournisseur</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <th class="cleprimaire">N°fournisseur</th>
+                            <th>Société</th>
+                            <th>Contact</th>
+                            <th>Fonction</th>
+                            <th>Adresse</th>
+                            <th>Ville</th>
+                            <th>Région</th>
+                            <th>Code postal</th>
+                            <th>Pays</th>
+                            <th>Téléphone</th>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                    <tr>
+                        <th colspan="7" class="produit">Produit</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <th class="cleprimaire">Réf produit</th>
+                        <th class="cleetrangere">N°fournisseur</th>
+                        <th class="cleetrangere">Code catégorie</th>
+                        <th>Nom du produit</th>
+                        <th>Quantité par unité</th>
+                        <th>Prix unitaire</th>
+                        <th>Unités en stock</th>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th colspan="3" class="categorie">Categorie</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <th class="cleprimaire">Code catégorie</th>
+                        <th>Nom de catégorie</th>
+                        <th>Description</th>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th colspan="8" class="Clientele">Clientele</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <th class="cleprimaire">Code client</th>
+                        <th>Société</th>
+                        <th>Contact</th>
+                        <th>Adresse</th>
+                        <th>Ville</th>
+                        <th>Code postal</th>
+                        <th>Pays</th>
+                        <th>Téléphone</th>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th colspan="6" class="commande">Commande</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <th class="cleprimaire">N°commande</th>
+                        <th class="cleetrangere">Code client</th>
+                        <th>Date commande</th>
+                        <th>A livrer avant</th>
+                        <th>Date envoi</th>
+                        <th>Port</th>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th colspan="5" class="detailcommande">DétailCommande</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <th class="cleetrangere">Réf produit</th>
+                        <th class="cleetrangere">N°commande</th>
+                        <th>Prix unitaire</th>
+                        <th>Quantité</th>
+                        <th>Remise (%)</th>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+            <section class="sec3">
+                <h2>Conclusion:</h2>
+
+                <h3>Erreurs de précisions:</h3>
+
+                <p>Dans la base de donnée excel, plus précisément dans le tableau présent dans la feuille produits on remarque dans le champ quantités, quelques détails sur l’entretien c'est-à-dire le conditionnement des différents produits sans pour autant réellement savoir si ils sont bien conditionnés.Par exemple, nous ne savons pas si certains produits sont gardés au frais ou à température ambiante ce qui peut fortement impacter leur qualité. Les seuls détails que nous possédons sont comment ils sont stockés plutôt que leur réel conditionnement. On remarque que selon les différents types de produits leur conditionnement est différent par exemple, les boissons liquide elles, vont être stockées bien évidemment dans des bouteilles ou canettes quant aux “boissons” comme le thé ou le café sous forme solide à leurs vente elles vont êtres stockés en boîte. Les condiments vont être stockés en pots ou en boîte ou encore en bouteille si liquide. Les desserts eux peuvent être stockés en boîte, verres, sacs, pièces, cartons, plaquettes, tablette. Les produits laitiers sont stockés en carton. De même pour la plupart des pâtes et céréales à part certains stockés en boites, pots ou sacs. Les viandes, produits sec, poissons et fruits de mer quant à eux sont aussi stockés comme le reste avec soit des boîtes, pots, verres ou carton.
+                </p>
+
+                <h3>Erreurs de données:</h3>
+
+                <section class="sous-sec2">
+                    <img src="assets/images/fournisseur.jpg" alt="fournisseur" >
+                    <p>Nous voyons dans la table de répartition des fournisseurs plusieurs problèmes qui peuvent causer des oublis. Toutes ces fautes de frappe renvoient bel et bien vers le même pays, mais si un utilisateur fait une recherche, même s’il orthographie correctement le ou les pays qu’il recherche, il ne trouvera pas tous les fournisseurs de ce pays. Dans la colonne Ville nous trouvons, par exemple, São Paulo écrit de deux manières (São Paulo et Sao Paulo). De même, dans la catégorie Pays, nous retrouvons “USA”, “Etats-Unis” et “Etats Unis”, ou encore “Royaume-Uni” et “Royaume Uni”, sans oublier “Suéde” et “Suède”:</p>
+                </section>
+
+                <section class="sous-sec3">
+
+                    <img src="assets/images/produit.jpg" alt="prod" >
+                    <img src="assets/images/categorie.jpg" alt="categ">
+                    <p>Nous pouvons aussi remarquer, dans le tableau présent dans la feuille produits, que certaines informations ne sont pas très claires telles que les codes de catégories associés à des produits qui dépassent les 8 catégories existantes:
+                    </p>
+                </section>
+
+                <h3>Perspective d’amélioration:</h3>
+
+                <p>Les transformer en une vraie base de données serait très utile et apportera de nombreux avantages. En liant les tables entre elles via des clés, celà permettrait d’éviter qu’un produit possède un fournisseur qui n’existe pas ou bien alors qu’il appartienne à une catégorie qui n’existe pas non plus. Une base de donnée nous permettrait également de créer des contrôles, des règles, qui limiteront le choix des utilisateurs de la base et donc la marge d’erreur. Par exemple, des contraintes sur le type qui éviteront les mauvaises saisies dues à des erreurs d'inattention. Pour les catégories qui ne renvoient pas vers d’autres tables comme les pays par exemple, proposer des choix au lieu d’une saisie libre permettrait d’éviter des erreurs d’orthographe ou différents types d’écritures.</p>
+
+            </section>
+
+        </article>
+
+
+    </main>
+
+
+</body>
+</html>
