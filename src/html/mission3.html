@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission 3</title>
+    <link rel="stylesheet" href="../css/mission3.css">
+</head>
+<body>
+<main>
+    <nav class="navigation">
+        <ul>
+            <li><a href="Accueil.html">Accueil</a></li>
+            <li><a href="#">Travaux</a></li>
+            <li><a href="#">A Propos</a></li>
+        </ul>
+        <div class = "logo">
+            <a href = "https://u-paris.fr/">
+                <img src = "../assets/images/logo.png" alt="Erreur">
+            </a>
+        </div>
+    </nav>
+    <h1>
+        Mission 3 : Analyser les données de Kdou avec le langage SQL :
+    </h1>
+    <section class ="contexte">
+        <h2>
+            Contexte :
+        </h2>
+        <img src="../assets/images/schema.png" alt="Erreur">
+        <div class="texte-en-valeur">
+            <p>
+                Avec les deux missions d'avant, nous avons appris que lorsque les données de Kdou sont situées dans une base de donnée,
+                on peut faire des requêtes pour y accéder, tout en posant des conditions sur ces dernières.
+                Mais il s'agit maintenant de déterminer quelles requêtes faire?
+                Quelles seraient les données qui seraient importante à Kdou d'obtenir afin de pouvoir évoluer?
+                Nous verrons ici quelques requêtes (ou indicateurs) qui permetrtaient à Kdou de repérer ses erreurs
+                ou de trouver des idées d'améliorations afin d'évoluer.
+            </p>
+        </div>
+
+    </section>
+    <section class ="indicateurs">
+        <div class= "theme1">
+            <h2>
+                Thème 1 : Les boissons et dessert
+            </h2>
+            <p>
+                KDou s’intéresse aux desserts et aux boissons dans sa réflexion en lien avec la santé :
+            </p>
+            <div class="separateur"></div>
+            <h3>
+                1er indicateur :
+            </h3>
+            <div>
+                <h4>
+                    Enoncé
+                </h4>
+                <p>
+                    On va chercher les pays de provenance des desserts ou boissons vendus à plus de 50 euros.
+                </p>
+                <h4>
+                    Construction :
+                </h4>
+                <p>
+                    On va lier les tables Catégorie, Fournisseurs et Produits en ne sélectionnant que les produits
+                    étant des desserts ou des boissons <strong>ET</strong> ayant un prix supérieur à 50.
+                    Puis on va afficher le nom de ces produits, leur prix, leur pays et leur catégorie.
+                </p>
+                <h4>
+                    SQL :
+                </h4>
+                <p class = "SQL">
+                    SELECT Produit.NomProd, Produit.PrixUnit, Fournisseur.Pays, Categorie.NomCateg<br>
+                    FROM Categorie<br>
+                    INNER JOIN (Fournisseur INNER JOIN Produit ON Fournisseur.NoFour = Produit.NoFour) ON Categorie.CodeCateg = Produit.CodeCateg<br>
+                    WHERE (((Produit.PrixUnit)>=50) AND ((Categorie.NomCateg)="boissons" Or (Categorie.NomCateg) Like "desserts"));<br>
+
+                </p>
+                <h4>
+                    Résultat :
+                </h4>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>NomProd</th>
+                        <th>PrixUnit</th>
+                        <th>Pays</th>
+                        <th>NomCateg</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Sir Rodney's Marmalade</td>
+                        <td>107.42€</td>
+                        <td>Royaume-Uni</td>
+                        <td>Boissons</td>
+                    </tr>
+                    <tr>
+                        <td>Steeleye Stout</td>
+                        <td>67.50€</td>
+                        <td>Royaume-Uni</td>
+                        <td>Desserts</td>
+                    </tr>
+                    <tr>
+                        <td>Côte de Blaye</td>
+                        <td>215.00€</td>
+                        <td>Etats-Unis</td>
+                        <td>Boissons</td>
+                    </tr>
+                    <tr>
+                        <td>Rhönbräu Klosterbier</td>
+                        <td>219.58€</td>
+                        <td>France</td>
+                        <td>Boissons</td>
+                    </tr>
+                    <tr>
+                        <td>Bratislava Vodka</td>
+                        <td>86.46€</td>
+                        <td>Allemagne</td>
+                        <td>Boissons</td>
+                    </tr>
+                    <tr>
+                        <td>Pimm's jojo</td>
+                        <td>320.00€</td>
+                        <td>Royaume-Uni</td>
+                        <td>Boissons</td>
+                    </tr>
+                    <tr>
+                        <td>Jus Kiwina</td>
+                        <td>55.83€</td>
+                        <td>Australia</td>
+                        <td>Boissons</td>
+                    </tr>
+                    <tr>
+                        <td>Jus Kiwina</td>
+                        <td>52.00€</td>
+                        <td>Royaume-Uni</td>
+                        <td>Boissons</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3>
+                2ème indicateur :
+            </h3>
+            <div>
+                <h4>
+                    Enoncé :
+                </h4>
+                <p>
+                    On va calculer le total du prix unitaire des produits vendus pour chaque catégorie. Cela permet de voir la contribution financière de chaque catégorie de produit.
+
+                </p>
+                <h4>
+                    Construction :
+                </h4>
+                <p>
+                    On va lier les tables Produit et Categorie pour afficher la somme des produits regroupés par catégories.
+                </p>
+                <h4>
+                    SQL :
+                </h4>
+                <p class = "SQL">
+                    SELECT Categorie.NomCateg, Sum(Produit.PrixUnit) AS SommeDePrixUnit<br>
+                    FROM Categorie<br>
+                    INNER JOIN Produit<br>
+                    ON Categorie.CodeCateg = Produit.CodeCateg<br>
+                    GROUP BY Categorie.NomCateg;<br>
+                </p>
+                <h4>
+                    Résultat :
+                </h4>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>NomCateg</th>
+                        <th>SommeDePrixUnit</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Boissons</td>
+                        <td>1889.41€</td>
+                    </tr>
+                    <tr>
+                        <td>Condiments</td>
+                        <td>266.91€</td>
+                    </tr>
+                    <tr>
+                        <td>Desserts</td>
+                        <td>361.47€</td>
+                    </tr>
+                    <tr>
+                        <td>Pâtes et céréales</td>
+                        <td>176.78€</td>
+                    </tr>
+                    <tr>
+                        <td>Poissons et fruits de mer</td>
+                        <td>382.83€</td>
+                    </tr>
+                    <tr>
+                        <td>Produits Laitiers</td>
+                        <td>251.28€</td>
+                    </tr>
+                    <tr>
+                        <td>Produits secs</td>
+                        <td>134.88€</td>
+                    </tr>
+                    <tr>
+                        <td>Viandes</td>
+                        <td>326.03€</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class = "theme2">
+            <h2>
+                Thème 2 : L'offre de KDou
+            </h2>
+            <p>
+                KDou se demande ce qu'il faut changer dans son offre
+            </p>
+            <div class="separateur"></div>
+            <h3>
+                1er indicateur :
+            </h3>
+            <div>
+                <h4>
+                    Enoncé :
+                </h4>
+                <p>
+                    On veux la liste des fournisseurs qui ont des produits pas encore commandés par un client. Cela permet d'identifier des produits ou des fournisseurs qui pourraient bénéficier de plus d'attention ou être supprimés.
+                </p>
+                <h4>
+                    Construction :
+                </h4>
+                <p>
+                    On va associer les produits à leur(s) numéro(s) de commande(s), et on va afficher seulement ceux qui en ont un NULL,
+                    c'est-à-dire qui n'ont aucune commande associée.
+                </p>
+                <h4>
+                    SQL :
+                </h4>
+                <p class = "SQL">
+                    SELECT Fournisseur.Societe, Produit.NomProd<br>
+                    FROM (Fournisseur INNER JOIN Produit ON Fournisseur.NoFour = Produit.NoFour) LEFT JOIN DetailCommande ON Produit.RefProd = DetailCommande.RefProd<br>
+                    WHERE DetailCommande.NoCom IS NULL;<br>
+
+                </p>
+                <h4>
+                    Résultat (extrait) :
+                </h4>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Societe</th>
+                        <th>NomProd</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Exotic Liquids</td>
+                        <td>Limonadystel</td>
+                    </tr>
+                    <tr>
+                        <td>Forêts d'érables</td>
+                        <td>Sugar bleu blanc</td>
+                    </tr>
+                    <tr>
+                        <td>Exotic Liquids</td>
+                        <td>Bratislava Vodka</td>
+                    </tr>
+                    <tr>
+                        <td>Exotic Liquids</td>
+                        <td>Beer native</td>
+                    </tr>
+                    <tr>
+                        <td>Exotic Liquids</td>
+                        <td>linonade ctinonella</td>
+                    </tr>
+                    <tr>
+                        <td>Exotic Liquids</td>
+                        <td>Cidre brut de saint Lô</td>
+                    </tr>
+                    <tr>
+                        <td>Exotic Liquids</td>
+                        <td>Rhum martini Cubano</td>
+                    </tr>
+                    <tr>
+                        <td>Exotic Liquids</td>
+                        <td>Calvanelle</td>
+                    </tr>
+                    <tr>
+                        <td>G'day, Mate</td>
+                        <td>Pimm' s jojo</td>
+                    </tr>
+                    <tr>
+                        <td>Perdigão</td>
+                        <td>Cachaça</td>
+                    </tr>
+                    <tr>
+                        <td>G'day, Mate</td>
+                        <td>Victoria Bitter</td>
+                    </tr>
+                    <tr>
+                        <td>Exotic Liquids</td>
+                        <td>Limon Lux</td>
+                    </tr>
+                    <tr>
+                        <td>Exotic Liquids</td>
+                        <td>Blue Wine</td>
+                    </tr>
+                    <tr>
+                        <td>Perdigão</td>
+                        <td>Guaraná em pô</td>
+                    </tr>
+                    <tr>
+                        <td>Forêts d'érables</td>
+                        <td>Jus d'érable d'or</td>
+                    </tr>
+                    <tr>
+                        <td>Westpac Corporation</td>
+                        <td>Arnott's Tim Tam Biscuits</td>
+                    </tr>
+                    <tr>
+                        <td>Exotic Liquids</td>
+                        <td>CocaChina</td>
+                    </tr>
+                    <tr>
+                        <td>New Orleans Cajun Delights</td>
+                        <td>Louisiana Coca</td>
+                    </tr>
+                    <tr>
+                        <td>Exotic Liquids</td>
+                        <td>LimoCoca</td>
+                    </tr>
+                    <tr>
+                        <td>Faro Madeiras</td>
+                        <td>Cachaça zuaviocado</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3>
+                2ème indicateur :
+            </h3>
+            <div>
+                <h4>
+                    Enoncé :
+                </h4>
+                <p>
+                    On veut le nombre de produits non-commandés regroupés par catégories
+                </p>
+                <h4>
+                    Construction :
+                </h4>
+                <p>
+                    On va lier les produits avec leur(s) numéro(s) de commande(s) (ou NULL comme vu au-dessus),
+                    et on va faire une jointure entre ces derniers et Catégorie pour les regrouper par leurs catégories et afficher leur nombre.
+                </p>
+                <h4>
+                    SQL :
+                </h4>
+                <p class = "SQL">
+                    SELECT Categorie.NomCateg, COUNT(Produit.RefProd) AS NombreProduitsNonCommandes<br>
+                    FROM (Categorie<br>
+                    INNER JOIN Produit ON Categorie.CodeCateg = Produit.CodeCateg)<br>
+                    LEFT JOIN DetailCommande ON Produit.RefProd = DetailCommande.RefProd<br>
+                    WHERE DetailCommande.RefProd IS NULL<br>
+                    GROUP BY Categorie.NomCateg;<br>
+                </p>
+                <h4>
+                    Résultat :
+                </h4>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>NomCateg</th>
+                        <th>NombreProduitsNonCommandes</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Boissons</td>
+                        <td>27</td>
+                    </tr>
+                    <tr>
+                        <td>Condiments</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>Desserts</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>Pâtes et céréales</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>Poissons et fruits de mer</td>
+                        <td>2</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class = "theme3">
+            <h2>
+                Thème 3 : La provenance des produits
+            </h2>
+            <p>
+                KDou veut étudier la provenance de ses produits
+            </p>
+            <div class="separateur"></div>
+            <h3>
+                1er indicateur :
+            </h3>
+            <div>
+                <h4>
+                    Enoncé :
+                </h4>
+                <p>
+                    On veut la liste des fournisseurs qui fournissent uniquement des desserts ou des boissons.
+                    Cela permet de connaitre les fournisseurs spécialisés en desserts ou en boissons.
+                </p>
+                <h4>
+                    Construction :
+                </h4>
+                <p>
+                    On va afficher seulement les fournisseurs qui ont des produits boissons ou desserts
+                    <strong>ET</strong> qui n'ont aucun produit venant d'une autre catégorie.
+                </p>
+                <h4>
+                    SQL :
+                </h4>
+                <p class = "SQL">
+                    SELECT DISTINCT f.Societe<br>
+                    FROM Fournisseur AS f INNER JOIN (Produit AS p INNER JOIN Categorie AS c ON c.CodeCateg = p.CodeCateg) ON f.NoFour = p.NoFour<br>
+                    WHERE c.NomCateg IN ("Boissons", "Desserts")<br>
+                    AND f.NoFour NOT IN<br>
+                    (SELECT p.NoFour<br>
+                    FROM Produit p<br>
+                    INNER JOIN Categorie c<br>
+                    ON p.CodeCateg = c.CodeCateg<br>
+                    WHERE c.NomCateg NOT IN ("Boissons", "Desserts"));<br>
+                </p>
+                <h4>
+                    Résultat (extrait) :
+                </h4>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Societe</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Aux joyeux ecclésiastiques</td>
+                    </tr>
+                    <tr>
+                        <td>Faro Madeiras</td>
+                    </tr>
+                    <tr>
+                        <td>Globalis</td>
+                    </tr>
+                    <tr>
+                        <td>Heli Süßwaren GmbH & Co. KG</td>
+                    </tr>
+                    <tr>
+                        <td>Karkki Oy</td>
+                    </tr>
+                    <tr>
+                        <td>Losad</td>
+                    </tr>
+                    <tr>
+                        <td>Perdigão</td>
+                    </tr>
+                    <tr>
+                        <td>Refrescos Americanas LTDA</td>
+                    </tr>
+                    <tr>
+                        <td>Specialty Biscuits, Ltd.</td>
+                    </tr>
+                    <tr>
+                        <td>Westpac Corporation</td>
+                    </tr>
+                    <tr>
+                        <td>Zaanse Snoepfabriek</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3>
+                2ème indicateur :
+            </h3>
+            <div>
+                <h4>
+                    Enoncé :
+                </h4>
+                <p>
+                    On veut les fournisseurs qui ne vendent des desserts et des boissons.
+                </p>
+                <h4>
+                    Construction :
+                </h4>
+                <p>
+                    On prend les fourisseurs qui ont des produits a la fois dans la catégorie desserts <strong>ET</strong> dans la catégorie boissons.
+                </p>
+                <h4>
+                    SQL :
+                </h4>
+                <p class = "SQL">
+                    SELECT DISTINCT f.Societe<br>
+                    FROM Fournisseur AS f INNER JOIN (Categorie AS c INNER JOIN Produit AS p ON c.CodeCateg = p.CodeCateg) ON f.NoFour = p.NoFour<br>
+                    WHERE c.NomCateg IN ("Boissons","Desserts");<br>
+
+                </p>
+                <h4>
+                    Résultat :
+                </h4>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Societe</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>Aux joyeux ecclésiastiques</td></tr>
+                    <tr><td>Bigfoot Breweries</td></tr>
+                    <tr><td>Exotic Liquids</td></tr>
+                    <tr><td>Faro Madeiras</td></tr>
+                    <tr><td>Forêts d'érables</td></tr>
+                    <tr><td>G'day, Mate</td></tr>
+                    <tr><td>Globalis</td></tr>
+                    <tr><td>Heli Süßwaren GmbH & Co. KG</td></tr>
+                    <tr><td>Karkki Oy</td></tr>
+                    <tr><td>Leka Trading</td></tr>
+                    <tr><td>Losad</td></tr>
+                    <tr><td>New Orleans Cajun Delights</td></tr>
+                    <tr><td>Pavlova, Ltd.</td></tr>
+                    <tr><td>PB Knäckebröd AB</td></tr>
+                    <tr><td>Perdigão</td></tr>
+                    <tr><td>Plusspar Lebensmittelgroßmärkte AG</td></tr>
+                    <tr><td>Refrescos Americanas LTDA</td></tr>
+                    <tr><td>Specialty Biscuits, Ltd.</td></tr>
+                    <tr><td>Westpac Corporation</td></tr>
+                    <tr><td>Zaanse Snoepfabriek</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class = "theme4">
+            <h2>
+                Thème 4 : La clientèle
+            </h2>
+            <p>
+                KDou veut étudier son type de clientèle
+            </p>
+            <div class="separateur"></div>
+            <h3>
+                1er indicateur :
+            </h3>
+            <div>
+                <h4>
+                    Enoncé :
+                </h4>
+                <p>
+                    Un client nantais Le verre à soi souhaite savoir quels autres clients nantais
+                    commandent aussi des produits en Allemagne pour envisager de futures livraisons
+                    groupées.
+                </p>
+                <h4>
+                    Construction :
+                </h4>
+                <p>
+                    On va afficher les clients qui viennent de Nantes qui ont des commandes pour des fournisseurs allemands.
+                </p>
+                <h4>
+                    SQL :
+                </h4>
+                <p class = "SQL">
+                    SELECT DISTINCT cl.CodeCli, cl.SocieteCli, cl.VilleCli, f.Pays<br>
+                    FROM ((Client AS cl INNER JOIN Commande AS co ON cl.CodeCli = co.CodeCli) INNER JOIN DetailCommande AS dc ON co.NoCom = dc.NoCom) INNER JOIN (Produit AS p INNER JOIN Fournisseur AS f ON p.NoFour = f.NoFour) ON dc.RefProd = p.RefProd<br>
+                    WHERE cl.VilleCli = 'Nantes'<br>
+                    AND f.Pays = 'Allemagne';<br>
+
+                </p>
+                <h4>
+                    Résultat (extrait) :
+                </h4>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>CodeCli</th>
+                        <th>SocieteCli</th>
+                        <th>VilleCli</th>
+                        <th>Pays</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>COMMI</td>
+                        <td>Pedro's house</td>
+                        <td>Nantes</td>
+                        <td>Allemagne</td>
+                    </tr>
+                    <tr>
+                        <td>DRACD</td>
+                        <td>Table nantaise</td>
+                        <td>Nantes</td>
+                        <td>Allemagne</td>
+                    </tr>
+                    <tr>
+                        <td>FURIB</td>
+                        <td>Verre à soi</td>
+                        <td>Nantes</td>
+                        <td>Allemagne</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3>
+                2ème indicateur :
+            </h3>
+            <div>
+                <h4>
+                    Enoncé :
+                </h4>
+                <p>
+                    Certains clients n’ont jamais eu la remise la plus importante de 25%. Qui sont-ils ?
+                </p>
+                <h4>
+                    Construction :
+                </h4>
+                <p>
+                    On prend les clients n'ayant jamais eu de commande avec une remise de plus de 25%.
+                </p>
+                <h4>
+                    SQL :
+                </h4>
+                <p class = "SQL">
+                    FROM Client AS cli<br>
+                    WHERE cli.CodeCli NOT IN (<br>
+                    SELECT DISTINCT com.CodeCli<br>
+                    FROM (Commande AS com INNER JOIN DetailCommande AS dc ON com.NoCom = dc.NoCom)<br>
+                    WHERE dc.Remise = 0.25);<br>
+                </p>
+                <h4>
+                    Résultat :
+                </h4>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>CodeCli</th>
+                        <th>SocieteCli</th>
+                        <th>Pays</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>ALYAD</td>
+                        <td>Chez Bouxou</td>
+                        <td>France</td>
+                    </tr>
+                    <tr>
+                        <td>MAKOU</td>
+                        <td>Le marikou</td>
+                        <td>France</td>
+                    </tr>
+                    <tr>
+                        <td>MORJU</td>
+                        <td>Les Morainières</td>
+                        <td>France</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <section class ="indicateursPersos">
+        <div class = "indicateur1">
+            <h2>
+                Indicateur 1
+            </h2>
+            <p>
+                On souhaite expédier les commandes des clients, tout en respectant l’environnement et en optimisant son offre. Donc nous allons valoriser les clients qui ont acheté en grande quantité pour optimiser les frais de transport, réduire la pollution et éviter les livraisons séparées. Cela permet aussi aux clients d’acheter les produits à une meilleure offre.
+            </p>
+            <div class="separateur"></div>
+            <div>
+                <h4>
+                    Enoncé :
+                </h4>
+                <p>
+                    Ma requête consiste à connaître les numéros de commandes des clients ayant acheté une grande quantité de produits avec un seuil minimum de 10, puis de classer les commandes à envoyer, du délai de commande du plus court au plus long, afin de respecter le délai.
+                </p>
+                <h4>
+                    Construction :
+                </h4>
+                <p>
+                    On affiche les commandes qui ont seulement une quantité plus élevée que 10, ainsi que leur temps de transport.
+                </p>
+                <h4>
+                    SQL :
+                </h4>
+                <p class = "SQL">
+                    SELECT Commande.NoCom, DetailCommande.QteCom, Commande.DateEnvoi, Commande.ALivrerAvant<br>
+                    FROM Commande<br>
+                    INNER JOIN DetailCommande ON Commande.NoCom = DetailCommande.NoCom<br>
+                    WHERE (((DetailCommande.QteCom)>=10) AND ((Commande.ALivrerAvant) Is Null))<br>
+                    ORDER BY DetailCommande.QteCom DESC , Commande.DateEnvoi;<br>
+                </p>
+                <h4>
+                    Résultat (extrait) :
+                </h4>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>NoCom</th>
+                        <th>QteCom</th>
+                        <th>DateEnvoi</th>
+                        <th>ALivrerAvant</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>11068</td><td>36</td><td>12/07/2020</td><td>12/07/2020</td></tr>
+                    <tr><td>11059</td><td>35</td><td>21/07/2020</td><td>21/07/2020</td></tr>
+                    <tr><td>11059</td><td>30</td><td>21/07/2020</td><td>21/07/2020</td></tr>
+                    <tr><td>11068</td><td>28</td><td>12/07/2020</td><td>12/07/2020</td></tr>
+                    <tr><td>11077</td><td>24</td><td>14/07/2020</td><td>14/07/2020</td></tr>
+                    <tr><td>11040</td><td>20</td><td>30/06/2020</td><td>30/06/2020</td></tr>
+                    <tr><td>11061</td><td>15</td><td>22/07/2020</td><td>22/07/2020</td></tr>
+                    <tr><td>11059</td><td>12</td><td>21/07/2020</td><td>21/07/2020</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class = "indicateur2">
+                <h2>
+                    Indicateur 2
+                </h2>
+                <p>
+                    On souhaite permettre à KDOU de mieux gérer son offre c'est-à-dire de l’adapter à la quantité de commandes passée en fonction des catégories.
+
+                </p>
+                <div class="separateur"></div>
+                <div>
+                    <h4>
+                        Enoncé :
+                    </h4>
+                    <p>
+                        Cette requête affiche le nombre de commandes passées selon chaque catégorie ce qui permet d’avoir une vue d’ensemble de la performance de chaque catégorie de produit.
+                    </p>
+                    <h4>
+                        Construction :
+                    </h4>
+                    <p>
+                        On fait la somme des commandes par produit en les groupant.
+                    </p>
+                    <h4>
+                        SQL :
+                    </h4>
+                    <p class = "SQL">
+                        SELECT Categorie.NomCateg AS CategoryName,<br>
+                        SUM(DetailCommande.QteCom) AS TotalQuantitySold<br>
+                        FROM (Categorie INNER JOIN Produit ON Categorie.CodeCateg = Produit.CodeCateg)<br>
+                        INNER JOIN DetailCommande ON Produit.RefProd = DetailCommande.RefProd<br>
+                        GROUP BY Categorie.NomCateg;<br>
+
+                    </p>
+                    <h4>
+                        Résultat (extrait) :
+                    </h4>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>CategoryName</th>
+                            <th>TotalQuantitySold</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Boissons</td>
+                            <td>12980</td>
+                        </tr>
+                        <tr>
+                            <td>Condiments</td>
+                            <td>6448</td>
+                        </tr>
+                        <tr>
+                            <td>Desserts</td>
+                            <td>9866</td>
+                        </tr>
+                        <tr>
+                            <td>Pâtes et céréales</td>
+                            <td>5838</td>
+                        </tr>
+                        <tr>
+                            <td>Poissons et fruits de mer</td>
+                            <td>10332</td>
+                        </tr>
+                        <tr>
+                            <td>Produits laitiers</td>
+                            <td>11714</td>
+                        </tr>
+                        <tr>
+                            <td>Produits secs</td>
+                            <td>3531</td>
+                        </tr>
+                        <tr>
+                            <td>Viandes</td>
+                            <td>5679</td>
+                        </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+        <div class = "indicateur3">
+            <h2>
+                Indicateur 3
+            </h2>
+            <p>
+                On veut connaitre les meilleurs fournisseurs de KDou
+            </p>
+            <div class="separateur"></div>
+            <div>
+                <h4>
+                    Enoncé :
+                </h4>
+                <p>
+                    Cette requête exprime le top 5 des fournisseurs avec le plus de produits:
+
+                </p>
+                <h4>
+                    Construction :
+                </h4>
+                <p>
+                    On classe les fournisseurs par la somme de leurs produits et on affiche seulement le top 5
+                </p>
+                <h4>
+                    SQL :
+                </h4>
+                <p class = "SQL">
+                    SELECT TOP 5 Fournisseur.Societe, COUNT(Produit.RefProd) AS NombreDeProduits<br>
+                    FROM Fournisseur<br>
+                    INNER JOIN Produit ON Fournisseur.NoFour = Produit.NoFour<br>
+                    GROUP BY Fournisseur.Societe<br>
+                    ORDER BY COUNT(Produit.RefProd) DESC, Fournisseur.Societe;<br>
+
+                </p>
+                <h4>
+                    Résultat :
+                </h4>
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Societe</th>
+                        <th>NombreDeProduits</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Exotic Liquids</td>
+                        <td>18</td>
+                    </tr>
+                    <tr>
+                        <td>Plusspar Lebensmittelgroßmärkte AG</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>G'day, Mate</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>Bigfoot Breweries</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>Forêts d'érables</td>
+                        <td>4</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class = "indicateur4">
+            <h2>
+                Indicateur 4
+            </h2>
+            <p>
+                On veut se renseigner sur les livraisons.
+            </p>
+            <div class="separateur"></div>
+            <div>
+                <h4>
+                    Enoncé :
+                </h4>
+                <p>
+                    Cette requete affiche les livraisons qui doivent etre faites dans une meme ville et dans une meme semaine.
+                </p>
+                <h4>
+                    Construction :
+                </h4>
+                <p>
+                    On affiche la commande et le client qui y correspond des commandes étant situées dans la même semaine choisie.
+                </p>
+                <h4>
+                    SQL :
+                </h4>
+                <p class = "SQL">
+                    SELECT Cm.NoCom, Cl.VilleCli, Cl.Pays, Cm.ALivrerAvant<br>
+                    FROM Commande AS Cm<br>
+                    INNER JOIN Client AS Cl ON Cm.CodeCli = Cl.CodeCli<br>
+                    WHERE Cm.ALivrerAvant BETWEEN #2021-06-10# AND #2021-06-17#;<br>
+
+                </p>
+                <h4>
+                    Résultat :
+                </h4>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>NoCom</th>
+                        <th>VilleCli</th>
+                        <th>Pays</th>
+                        <th>ALivrerAvant</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>10495</td><td>Caen</td><td>France</td><td>11/06/2023</td></tr>
+                    <tr><td>10493</td><td>Lille</td><td>France</td><td>10/06/2023</td></tr>
+                    <tr><td>11007</td><td>Lille</td><td>France</td><td>16/06/2023</td></tr>
+                    <tr><td>10499</td><td>Lille</td><td>France</td><td>16/06/2023</td></tr>
+                    <tr><td>10999</td><td>Locmariaquer</td><td>France</td><td>11/06/2023</td></tr>
+                    <tr><td>10174</td><td>Lyon</td><td>France</td><td>11/06/2023</td></tr>
+                    <tr><td>11004</td><td>Marseille</td><td>France</td><td>15/06/2023</td></tr>
+                    <tr><td>10497</td><td>Marseille</td><td>France</td><td>12/06/2023</td></tr>
+                    <tr><td>11008</td><td>Nantes</td><td>France</td><td>15/06/2023</td></tr>
+                    <tr><td>11005</td><td>Nantes</td><td>France</td><td>17/06/2023</td></tr>
+                    <tr><td>10501</td><td>Nantes</td><td>France</td><td>17/06/2023</td></tr>
+                    <tr><td>10500</td><td>Paris</td><td>France</td><td>17/06/2023</td></tr>
+                    <tr><td>10976</td><td>Paris</td><td>France</td><td>16/06/2023</td></tr>
+                    <tr><td>11013</td><td>Paris</td><td>France</td><td>17/06/2023</td></tr>
+                    <tr><td>11011</td><td>Paris</td><td>France</td><td>17/06/2023</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+</main>
+</body>
+</html>
