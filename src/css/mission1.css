@@ -5,11 +5,11 @@
     --border-color: #1a2640;
     --text-color: #333;
     --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --gradient-bg: linear-gradient(135deg, #354e80 0%, #1a2640 100%);
+    --background: linear-gradient(135deg, #354e80 0%, #1a2640 100%);
 }
 
 body {
-    background: var(--gradient-bg);
+    background: var(--background);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     margin: 0;
@@ -20,7 +20,69 @@ body {
 main {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 100px 2rem 2rem 2rem;
+    padding-top: 100px;
+}
+
+nav {
+    background: linear-gradient(135deg, #354e80 0%, #1a2640 100%);
+    width: 100%;
+    height: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    justify-content: space-between;
+}
+
+nav ul {
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+}
+
+nav ul li {
+    list-style: none;
+    margin-left: 30px;
+}
+
+nav ul li a {
+    color: #eef4ff;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: monospace;
+    padding: 10px 15px;
+}
+
+nav ul li a:hover {
+    color: #cedaf2;
+    transition: .3s;
+}
+
+.shadow {
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 40px rgba(0,0,0,0.1) inset;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    order: 2;
+    margin-right: 65px;
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    max-height: 80%;
+    vertical-align: middle;
 }
 
 .sec1, .sec2, .sec3 {
