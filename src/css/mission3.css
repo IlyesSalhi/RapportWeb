@@ -5,60 +5,54 @@
     --border-color: #1a2640;
     --text-color: #333;
     --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --gradient-bg: linear-gradient(135deg, #354e80 0%, #1a2640 100%);
+    --background: linear-gradient(135deg, #354e80 0%, #1a2640 100%);
 }
 
-main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 100px 2rem 2rem 2rem;
-}
 
 body {
-    background: var(--gradient-bg);
+    background: var(--background);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
     color: var(--text-color);
 }
+.indicateurs-grid{
+    justify-content: center;
+}
 
-/* Navigation */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 100px;
+}
+
 nav {
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, #354e80 0%, #1a2640 100%);
     width: 100%;
     height: 80px;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
+    box-shadow: var(--shadow);
     display: flex;
-    justify-content: space-between;
     align-items: center;
-}
-
-
-.logo{
-    display: flex;
-    justify-content: start;
-    margin: 10px;
-}
-
-.logo a img{
-    height: 60px;
+    padding: 0 2rem;
+    justify-content: space-between;
 }
 
 nav ul {
-    margin: 0;
     padding: 0;
     display: flex;
+    justify-content: flex-start;
     align-items: center;
     height: 100%;
-    list-style: none;
-    justify-content: end;
+    margin: 0;
 }
 
 nav ul li {
+    list-style: none;
     margin-left: 30px;
 }
 
@@ -68,15 +62,32 @@ nav ul li a {
     font-size: 20px;
     font-family: monospace;
     padding: 10px 15px;
-    transition: .3s;
 }
 
 nav ul li a:hover {
-    color: var(--secondary-color);
-    background: rgba(0, 0, 0, 0.1);
-    box-shadow: var(--box-shadow);
+    color: #cedaf2;
+    transition: .3s;
 }
 
+.shadow {
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 40px rgba(0,0,0,0.1) inset;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    order: 2;
+    margin-right: 65px;
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    max-height: 80%;
+    vertical-align: middle;
+}
 h1 {
     margin: 1em;
     color : white;
@@ -100,7 +111,7 @@ section {
     text-decoration: underline;
     font-weight: bold;
     font-size : 2em;
-    color : var(--text-color) /* Si on veut changer la couleur des titres des sections */
+    color : var(--text-color)
 }
 
 .contexte img {
@@ -109,7 +120,6 @@ section {
 }
 
 .texte-en-valeur {
-    background: var(--gradient-bg);
     color: white;
     padding: 1px;
     border-radius: 8px;
